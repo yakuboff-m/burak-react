@@ -1,0 +1,17 @@
+[57-58]
+    React installation via classic way (with REDUX and TS)
+        Redux toolkit(Boiler-plate = not business logic -> makes the code work)
+    Virtual DOM tshunchasi
+        Diffing Algorithm
+    React doc
+    project package sozlash
+
+    Material UI integration
+----------------------------------------------------------------------------
+
+[59]
+    React Router DOM orqali routing tizimini o'rnatish
+    Screen components
+      -> sectional components
+        -> reusable components 
+    Frontend ning Screen components hosil qilish 
