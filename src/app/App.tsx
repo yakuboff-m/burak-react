@@ -22,7 +22,7 @@ function App() {
       {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
       {location.pathname === "/" ? <HomeNavbar /> : <OtherNavbar />}
-      {/* temporary minHeight */}
+      {/* temporary minHeight -> should be DELETED! */}
       <Box sx={{ minHeight: "20vh" }}>
         <Switch>
           <Route path="/products">
