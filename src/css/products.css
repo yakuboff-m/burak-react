@@ -318,6 +318,48 @@ rgba(215, 181, 134, 1);
     margin-top: 67px;
     height: 630px;
     background: rgba(13, 21, 24, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+}
+
+.brands-title {
+width: 335px;
+height: 46px;
+color: rgba(227, 192, 141, 1);
+font-family: Roboto;
+font-size: 36px !important;
+font-weight: 700 !important;
+line-height: 42px !important;
+letter-spacing: 0%;
+text-align: left;
+}
+
+.brand-face-box {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: row !important;
+    justify-content: center;
+    gap: 87px;
+}
+
+.brand-face {
+    padding: 10px;
+width: 258.78px !important;
+height: 350px !important;
+border-radius: 20px;
+box-shadow: 0px 0px 22px 0px rgba(228, 212, 212, 1);
+background: rgba(13, 21, 24, 1);
+}
+
+.brand-face img {
+width: 238.87px;
+height: 329px;
+border-radius: 16px;
+box-shadow: inset 0px 4px 4px 0px rgba(0, 0, 0, 0.25),inset 0px 4px 4px 0px rgba(0, 0, 0, 0.25),inset 0px 4px 16px 0px rgba(242, 189, 87, 0.04);
+align-items: center;
 }
 
 /** <======= ChosenProduct =======> */

@@ -154,7 +154,21 @@ export default function Products() {
       </Container>
 
       <div className="brands-logo">
-        
+        <Typography className="brands-title">Our Family Brands</Typography>
+        <Stack className="brand-face-box">
+            <Box className="brand-face">
+                <img src="/img/gurme.webp" alt="" />
+            </Box>
+            <Box className="brand-face">
+                <img src="/img/seafood.webp" alt="" />
+            </Box>
+            <Box className="brand-face">
+                <img src="/img/sweets.webp" alt="" />
+            </Box>
+            <Box className="brand-face">
+                <img src="/img/doner.webp" alt="" />
+            </Box>
+        </Stack>
       </div>
 
       {/* <div className={"address"}>
