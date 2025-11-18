@@ -12,8 +12,8 @@ import {
   PaginationItem,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 const products = [
   { productName: "Cutlet", imagePath: "/img/cutlet.webp" },
@@ -156,35 +156,37 @@ export default function Products() {
       <div className="brands-logo">
         <Typography className="brands-title">Our Family Brands</Typography>
         <Stack className="brand-face-box">
-            <Box className="brand-face">
-                <img src="/img/gurme.webp" alt="" />
-            </Box>
-            <Box className="brand-face">
-                <img src="/img/seafood.webp" alt="" />
-            </Box>
-            <Box className="brand-face">
-                <img src="/img/sweets.webp" alt="" />
-            </Box>
-            <Box className="brand-face">
-                <img src="/img/doner.webp" alt="" />
-            </Box>
+          <Box className="brand-face">
+            <img src="/img/gurme.webp" alt="" />
+          </Box>
+          <Box className="brand-face">
+            <img src="/img/seafood.webp" alt="" />
+          </Box>
+          <Box className="brand-face">
+            <img src="/img/sweets.webp" alt="" />
+          </Box>
+          <Box className="brand-face">
+            <img src="/img/doner.webp" alt="" />
+          </Box>
         </Stack>
       </div>
 
-      {/* <div className={"address"}>
+      <div className={"address"}>
         <Container>
           <Stack className={"address-area"}>
-            <Box className={"title"}>Our address</Box>
+            <Box className={"address-title"}>Our address</Box>
             <iframe
-              style={{ marginTop: "60px" }}
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d"
+              style={{ marginTop: "60px", marginBottom: "89px", border: 0  }}
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d203686.4830396607!2d126.8348966!3d37.5666791!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca28b61c565cd%3A0x858aedb4e4ea83eb!2sSeoul%2C%20South%20Korea!5e0!3m2!1sen!2s!4v1700000000000!5m2!1sen!2s"
               width="1320"
-              height="500"
+              height="560"
+              allowFullScreen
+              loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             ></iframe>
           </Stack>
         </Container>
-      </div> */}
+      </div>
     </div>
   );
 }
