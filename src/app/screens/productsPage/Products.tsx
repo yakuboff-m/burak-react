@@ -66,10 +66,9 @@ export default function Products() {
         </Stack>
 
         <Stack className="products-page-wrapper">
+          <Stack direction="row" className="products-layout">
           <Stack className="category-tabs" direction="column">
-            <Button variant="contained" color="primary">
-              DISH
-            </Button>
+            <Button variant="contained">DISH</Button>
             <Button variant="contained" color="secondary">
               SALAD
             </Button>
@@ -84,7 +83,7 @@ export default function Products() {
             </Button>
           </Stack>
 
-          <Stack>
+          <Stack className="products-grid">
             <div className="cards-frame">
               {products.length !== 0 ? (
                 products.map((ele, index) => {
@@ -133,6 +132,7 @@ export default function Products() {
               )}
             </div>
           </Stack>
+          </Stack>
 
           <Stack className={"pagination-section"}>
             <Pagination
@@ -176,7 +176,7 @@ export default function Products() {
           <Stack className={"address-area"}>
             <Box className={"address-title"}>Our address</Box>
             <iframe
-              style={{ marginTop: "60px", marginBottom: "89px", border: 0  }}
+              style={{ marginTop: "60px", marginBottom: "89px", border: 0 }}
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d203686.4830396607!2d126.8348966!3d37.5666791!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca28b61c565cd%3A0x858aedb4e4ea83eb!2sSeoul%2C%20South%20Korea!5e0!3m2!1sen!2s!4v1700000000000!5m2!1sen!2s"
               width="1320"
               height="560"
