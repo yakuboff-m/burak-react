@@ -1,7 +1,7 @@
 // @ts-nocheck
-import React, {} from "react";
+import React, { Component} from "react";
 
-class Test extends React.Component {
+class Test extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,6 +14,23 @@ class Test extends React.Component {
   changeDetail = () => {
     this.setState({color: "blue", brand: "BMW", model: "M5", year: 2020});
   }
+
+  componentDidMount() {
+    console.log("componentDidMount");
+    // runs after first render => RETRIEVE DATA FROM BACKEND SERVER
+  }
+
+  componentWillUnmount() {
+    console.log("componentWillUnmount");
+    // runs before component unmount
+  }
+
+  componentDidUpdate() {
+    
+  }
+
+  
+
   render() {
     return (
       <div>
