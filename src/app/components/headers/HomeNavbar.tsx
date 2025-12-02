@@ -6,7 +6,7 @@ import React, {useEffect, useState} from "react";
 export default function HomeNavbar() {
   const authMember = null;
   const [count, setCount] = useState<number>(0);
-  const [value, setvalue] = useState<boolean>(true);
+  const [value, setvalue] = useState<boolean>(true); 
   // const [value, setvalue] = useState<number>(0);
 
   useEffect (() => {
@@ -21,7 +21,7 @@ export default function HomeNavbar() {
 
   // HANDLERS
   const buttonHandler = () => {
-    setvalue(!value);
+    setvalue(!value); 
     // const trigger = () => setvalue(Math.random());
     // trigger();
   }

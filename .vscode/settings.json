@@ -1,0 +1,9 @@
+{
+    "[typescript]": {
+  "editor.inlineSuggest.enabled": false
+},
+"[typescriptreact]": {
+  "editor.inlineSuggest.enabled": false
+}
+
+}

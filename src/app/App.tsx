@@ -39,8 +39,8 @@ function App() {
             <HelpPage />
           </Route>
           <Route path="/">
-            {/* <Test /> */}
-            <HomePage />
+            {/* <Human /> */}
+            {/* <HomePage /> */}
           </Route>
         </Switch>
       </Box>
