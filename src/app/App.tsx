@@ -40,7 +40,7 @@ function App() {
           </Route>
           <Route path="/">
             {/* <Human /> */}
-            {/* <HomePage /> */}
+            <HomePage />
           </Route>
         </Switch>
       </Box>
