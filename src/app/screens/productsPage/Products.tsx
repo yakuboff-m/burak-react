@@ -14,6 +14,23 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { Dispatch } from "@reduxjs/toolkit";
+import { useDispatch, } from "react-redux";
+import { setRestaurant, setChosenProduct, setProducts } from "./slice";
+import { Product } from "../../../lib/types/product";
+import { retrieveProducts } from "./selector";
+import { createSelector } from "reselect";
+
+/** REDUX SLICE & SELECTOR **/
+const actionDispatch = (dispatch: Dispatch) => ({
+  setProducts: (data: Product[]) => dispatch(setProducts(data)),
+});
+
+const productsRetriever = createSelector(
+  retrieveProducts,
+  (products) => ({ products  })
+);
+
 
 const products = [
   { productName: "Cutlet", imagePath: "/img/cutlet.webp" },

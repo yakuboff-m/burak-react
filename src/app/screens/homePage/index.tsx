@@ -12,7 +12,7 @@ import { Product } from "../../../lib/types/product";
 import ProductService from "../../services/ProductService";
 import { ProductCollection } from "../../../lib/enums/product.enum";
 import "../../../css/home.css";
-import MemberService from "../../services/MemberService1";
+import MemberService from "../../services/MemberService";
 import { Member } from "../../../lib/types/member";
 
 /** REDUX SLICE & SELECTOR **/
@@ -44,7 +44,7 @@ export default function HomePage() {
     product.getProducts({
       page: 1,
       limit: 4,
-      order: "-createdAt",
+      order: "createdAt",
       // productCollection: ProductCollection.DISH
     }).then(data => {
       // console.log("data passed here:", data);
