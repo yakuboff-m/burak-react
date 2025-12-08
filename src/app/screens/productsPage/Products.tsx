@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Box,
   Button,
@@ -15,35 +15,43 @@ import SearchIcon from "@mui/icons-material/Search";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { Dispatch } from "@reduxjs/toolkit";
-import { useDispatch, } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setRestaurant, setChosenProduct, setProducts } from "./slice";
 import { Product } from "../../../lib/types/product";
 import { retrieveProducts } from "./selector";
 import { createSelector } from "reselect";
+import ProductService from "../../services/ProductService";
+import { ProductCollection } from "../../../lib/enums/product.enum";
+import { serverApi } from "../../../lib/config";
 
 /** REDUX SLICE & SELECTOR **/
 const actionDispatch = (dispatch: Dispatch) => ({
   setProducts: (data: Product[]) => dispatch(setProducts(data)),
 });
 
-const productsRetriever = createSelector(
-  retrieveProducts,
-  (products) => ({ products  })
-);
-
-
-const products = [
-  { productName: "Cutlet", imagePath: "/img/cutlet.webp" },
-  { productName: "Kebab", imagePath: "/img/kebab-fresh.webp" },
-  { productName: "Kebab", imagePath: "/img/kebab.webp" },
-  { productName: "Lavash", imagePath: "/img/lavash.webp" },
-  { productName: "Lavash", imagePath: "/img/lavash.webp" },
-  { productName: "Cutlet", imagePath: "/img/cutlet.webp" },
-  { productName: "Kebab", imagePath: "/img/kebab.webp" },
-  { productName: "Kebab", imagePath: "/img/kebab-fresh.webp" },
-];
+const productsRetriever = createSelector(retrieveProducts, (products) => ({
+  products,
+}));
 
 export default function Products() {
+  const { setProducts } = actionDispatch(useDispatch());
+  const { products } = useSelector(productsRetriever);
+
+  useEffect(() => {
+    const product = new ProductService();
+
+    product
+      .getProducts({
+        order: "createdAt",
+        page: 1,
+        limit: 8,
+        productCollection: ProductCollection.DISH,
+        search: "",
+      })
+      .then((data) => setProducts(data))
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
     <div className="products">
       <Container>
@@ -84,71 +92,78 @@ export default function Products() {
 
         <Stack className="products-page-wrapper">
           <Stack direction="row" className="products-layout">
-          <Stack className="category-tabs" direction="column">
-            <Button variant="contained">DISH</Button>
-            <Button variant="contained" color="secondary">
-              SALAD
-            </Button>
-            <Button variant="contained" color="secondary">
-              DRINK
-            </Button>
-            <Button variant="contained" color="secondary">
-              DESERT
-            </Button>
-            <Button variant="contained" color="secondary">
-              OTHER
-            </Button>
-          </Stack>
+            <Stack className="category-tabs" direction="column">
+              <Button variant="contained">DISH</Button>
+              <Button variant="contained" color="secondary">
+                SALAD
+              </Button>
+              <Button variant="contained" color="secondary">
+                DRINK
+              </Button>
+              <Button variant="contained" color="secondary">
+                DESERT
+              </Button>
+              <Button variant="contained" color="secondary">
+                OTHER
+              </Button>
+            </Stack>
 
-          <Stack className="products-grid">
-            <div className="cards-frame">
-              {products.length !== 0 ? (
-                products.map((ele, index) => {
-                  return (
-                    <Card key={index} className="card">
-                      <Chip label="LARGE size" size="small" />
+            <Stack className="products-grid">
+              <div className="cards-frame">
+                {products.length !== 0 ? (
+                  products.map((product: Product) => {
+                    const imagePath = `${serverApi}/${product.productImages[0]}`;
+                    const sizeVolume =
+                      product.productCollection === ProductCollection.DRINK
+                        ? product.productVolume + " litr"
+                        : product.productSize + " size";
+                    return (
+                      <Card key={product._id} className="card">
+                        <Chip label={sizeVolume} size="small" />
 
-                      <CardMedia
-                        component="img"
-                        image={ele.imagePath}
-                        alt={ele.productName}
-                      />
+                        <CardMedia
+                          component="img"
+                          image={imagePath}
+                          alt={product.productName}
+                        />
 
-                      <Box className="hover-overlay">
-                        <Box className="hover-icons">
-                          <button className="shop-button">
-                            <img src="/icons/shopping-cart.svg" alt="shop" />
-                          </button>
-                          <Box className="eye-badge">
-                            <img
-                              src="/icons/eye.png"
-                              alt="views"
-                              className="eye-icon"
-                            />
-                            <span className="view-count">2</span>
+                        <Box className="hover-overlay">
+                          <Box className="hover-icons">
+                            <button className="shop-button">
+                              <img src="/icons/shopping-cart.svg" alt="shop" />
+                            </button>
+                            <Box className="eye-badge">
+                              <img
+                                src="/icons/eye.png"
+                                alt="views"
+                                className="eye-icon"
+                              />
+                              <span className="view-count">{product.productViews}</span>
+                            </Box>
                           </Box>
                         </Box>
-                      </Box>
 
-                      <Box className="card-info">
-                        <h3 className="product-name">{ele.productName}</h3>
-                        <Box className="price-container">
-                          <img
-                            src="/icons/dollar-coin.png"
-                            alt="price"
-                            className="dollar-icon"
-                          />
-                          <span className="price">15</span>
+                        <Box className="card-info">
+                          <h3 className="product-name">
+                            {product.productName}
+                          </h3>
+                          <Box className="price-container">
+                            <img
+                              src="/icons/dollar-coin.png"
+                              alt="price"
+                              className="dollar-icon"
+                            />
+                            <span className="price">{product.productPrice}</span>
+                          </Box>
                         </Box>
-                      </Box>
-                    </Card>
-                  );
-                })
-              ) : (
-                <Box className="no-data">New products are not available!</Box>
-              )}
-            </div>
-          </Stack>
+                      </Card>
+                    );
+                  })
+                ) : (
+                  <Box className="no-data">New products are not available!</Box>
+                )}
+              </div>
+            </Stack>
           </Stack>
 
           <Stack className={"pagination-section"}>
