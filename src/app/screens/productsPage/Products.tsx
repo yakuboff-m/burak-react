@@ -25,7 +25,8 @@ import { createSelector } from "reselect";
 import ProductService from "../../services/ProductService";
 import { ProductCollection } from "../../../lib/enums/product.enum";
 import { serverApi } from "../../../lib/config";
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
+import { CartItem } from "../../../lib/types/search";
 
 /** REDUX SLICE & SELECTOR **/
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -36,7 +37,12 @@ const productsRetriever = createSelector(retrieveProducts, (products) => ({
   products,
 }));
 
-export default function Products() {
+interface ProDuctsProps {
+  onAdd: (item: CartItem) => void;
+}
+
+export default function Products(props: ProDuctsProps) {
+  const { onAdd } = props;
   const { setProducts } = actionDispatch(useDispatch());
   const { products } = useSelector(productsRetriever);
   const [productSearch, setProductSearch] = useState<ProductInquiry>({
@@ -281,7 +287,19 @@ export default function Products() {
 
                         <Box className="hover-overlay">
                           <Box className="hover-icons">
-                            <button className="shop-button">
+                            <button
+                              className="shop-button"
+                              onClick={(e) => {
+                                onAdd({
+                                  _id: product._id,
+                                  quantity: 1,
+                                  name: product.productName,
+                                  price: product.productPrice,
+                                  image: product.productImages[0],
+                                });
+                                e.stopPropagation();
+                              }}
+                            >
                               <img src="/icons/shopping-cart.svg" alt="shop" />
                             </button>
                             <Box className="eye-badge">
