@@ -1,36 +1,39 @@
 import { Box, Button, Container, Stack } from "@mui/material";
 import Basket from "./Basket";
 import { NavLink } from "react-router-dom";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { CartItem } from "../../../lib/types/search";
 
 interface HomeNavbarProps {
   cartItems: CartItem[];
+  onAdd: (item: CartItem) => void;
+  onRemove: (item: CartItem) => void;
+  onDelete: (item: CartItem) => void;
+  onDeleteAll: () => void;
 }
 
 export default function HomeNavbar(props: HomeNavbarProps) {
-  const {cartItems} = props
+  const { cartItems, onAdd, onRemove, onDelete, onDeleteAll } = props;
   const authMember = null;
   const [count, setCount] = useState<number>(0);
-  const [value, setvalue] = useState<boolean>(true); 
+  const [value, setvalue] = useState<boolean>(true);
   // const [value, setvalue] = useState<number>(0);
 
-  useEffect (() => {
+  useEffect(() => {
     console.log("componentDidMount"); //DATA FETCHING
     setCount(count + 1);
 
     return () => {
       console.log("componentWillUnmount");
-    }
+    };
   }, [value]);
-
 
   // HANDLERS
   const buttonHandler = () => {
-    setvalue(!value); 
+    setvalue(!value);
     // const trigger = () => setvalue(Math.random());
     // trigger();
-  }
+  };
 
   return (
     <div className="home-navbar">
@@ -71,8 +74,14 @@ export default function HomeNavbar(props: HomeNavbarProps) {
                 Help
               </NavLink>
             </Box>
-            
-            <Basket cartItems={cartItems}/>
+
+            <Basket
+              cartItems={cartItems}
+              onAdd={onAdd}
+              onRemove={onRemove}
+              onDelete={onDelete}
+              onDeleteAll={onDeleteAll}
+            />
 
             {!authMember ? (
               <Box>
@@ -96,15 +105,17 @@ export default function HomeNavbar(props: HomeNavbarProps) {
             <Box className="service-txt">{count} hours service</Box>
             <Box className="signup">
               {!authMember ? (
-                <Button 
-                  variant="contained" 
-                  onClick={buttonHandler} 
+                <Button
+                  variant="contained"
+                  onClick={buttonHandler}
                   className="signup-button"
-                  >SIGN UP</Button>
+                >
+                  SIGN UP
+                </Button>
               ) : null}
             </Box>
           </Stack>
-          <Stack className="logo-frame"> 
+          <Stack className="logo-frame">
             <div className="logo-img"></div>
           </Stack>
         </Stack>

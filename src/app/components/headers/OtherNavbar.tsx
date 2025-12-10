@@ -1,16 +1,21 @@
 import { Box, Button, Container, Stack } from "@mui/material";
-import Basket from "./Basket"; 
+import Basket from "./Basket";
 import { NavLink } from "react-router-dom";
-import { CartItem } from '../../../lib/types/search';
+import { CartItem } from "../../../lib/types/search";
 
 interface OtherNavbarProps {
   cartItems: CartItem[];
+  onAdd: (item: CartItem) => void;
+  onRemove: (item: CartItem) => void;
+  onDelete: (item: CartItem) => void;
+  onDeleteAll: () => void;
 }
 
 export default function OtherNavbar(props: OtherNavbarProps) {
-  const {cartItems} = props;
-    const authMember = true;
-    return <div className="other-navbar">
+  const { cartItems, onAdd, onRemove, onDelete, onDeleteAll } = props;
+  const authMember = true;
+  return (
+    <div className="other-navbar">
       <Container className="navbar-container">
         <Stack className="menu">
           <Box>
@@ -20,9 +25,7 @@ export default function OtherNavbar(props: OtherNavbarProps) {
           </Box>
           <Stack className="links">
             <Box className={"hover-line"}>
-              <NavLink to="/">
-                Home
-              </NavLink>
+              <NavLink to="/">Home</NavLink>
             </Box>
             <Box className={"hover-line"}>
               <NavLink to={"/products"} activeClassName={"underline"}>
@@ -48,8 +51,14 @@ export default function OtherNavbar(props: OtherNavbarProps) {
                 Help
               </NavLink>
             </Box>
-            
-            <Basket cartItems={cartItems}/>
+
+            <Basket
+              cartItems={cartItems}
+              onAdd={onAdd}
+              onRemove={onRemove}
+              onDelete={onDelete}
+              onDeleteAll={onDeleteAll}
+            />
 
             {!authMember ? (
               <Box>
@@ -67,5 +76,6 @@ export default function OtherNavbar(props: OtherNavbarProps) {
           </Stack>
         </Stack>
       </Container>
-    </div>;
+    </div>
+  );
 }
