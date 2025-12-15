@@ -34,8 +34,8 @@ export default function HomeNavbar(props: HomeNavbarProps) {
     handleCloseLogout,
     anchorEl,
     handleLogoutRequest,
-  } = props;
-  const { authMember } = useGlobals();
+  } = props,
+   { authMember } = useGlobals();
 
   // HANDLERS
 

@@ -34,8 +34,8 @@ export default function OtherNavbar(props: OtherNavbarProps) {
     handleCloseLogout,
     anchorEl,
     handleLogoutRequest,
-  } = props;
-  const { authMember } = useGlobals();
+  } = props,
+   { authMember } = useGlobals();
 
   return (
     <div className="other-navbar">
