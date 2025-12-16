@@ -1,4 +1,4 @@
-import { useState, SyntheticEvent, } from "react";
+import { useState, SyntheticEvent, useEffect } from "react";
 import { Dispatch } from "@reduxjs/toolkit";
 import { Container, Stack, Box } from "@mui/material";
 import Tabs from "@mui/material/Tabs";
@@ -14,17 +14,45 @@ import { Product } from "../../../lib/types/product";
 import { Member } from "../../../lib/types/member";
 import { setPausedOrders, setProcessOrders, setFinishedOrders } from "./slice";
 import { useDispatch } from "react-redux";
+import { Order, OrderInquiry } from "../../../lib/types/order";
+import { OrderStatus } from "../../../lib/enums/order.enum";
+import OrderService from "../../services/OrderService";
 
 /** REDUX SLICE & SELECTOR **/
 const actionDispatch = (dispatch: Dispatch) => ({
-  setPausedOrders: (data: Product[]) => dispatch(setPausedOrders(data)),
-  setProcessOrders: (data: Product[]) => dispatch(setProcessOrders(data)),
-  setTFinishedOrders: (data: Member[]) => dispatch(setFinishedOrders(data))
+  setPausedOrders: (data: Order[]) => dispatch(setPausedOrders(data)),
+  setProcessOrders: (data: Order[]) => dispatch(setProcessOrders(data)),
+  setTFinishedOrders: (data: Order[]) => dispatch(setFinishedOrders(data)),
 });
 
 export default function OrdersPage() {
-  const { setPausedOrders, setProcessOrders, setTFinishedOrders} = actionDispatch(useDispatch());
+  const { setPausedOrders, setProcessOrders, setTFinishedOrders } =
+    actionDispatch(useDispatch());
   const [value, setValue] = useState("1");
+  const [orderInquiry, setOrderInquiry] = useState<OrderInquiry>({
+    page: 1,
+    limit: 5,
+    orderStatus: OrderStatus.PAUSE,
+  });
+
+  useEffect(() => {
+    const order = new OrderService();
+
+    order
+      .getMyOrders({ ...orderInquiry, orderStatus: OrderStatus.PAUSE })
+      .then((data) => setPausedOrders(data))
+      .catch((err) => console.log(err));
+
+    order
+      .getMyOrders({ ...orderInquiry, orderStatus: OrderStatus.PROCESS })
+      .then((data) => setProcessOrders(data))
+      .catch((err) => console.log(err));
+
+    order
+      .getMyOrders({ ...orderInquiry, orderStatus: OrderStatus.FINISH })
+      .then((data) => setTFinishedOrders(data))
+      .catch((err) => console.log(err));
+  }, [orderInquiry]);
 
   /** HANDLERS **/
 
