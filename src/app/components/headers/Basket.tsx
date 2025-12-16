@@ -23,7 +23,7 @@ interface BasketProps {
 
 export default function Basket(props: BasketProps) {
   const { cartItems, onAdd, onRemove, onDelete, onDeleteAll } = props;
-  const { authMember } = useGlobals();
+  const { authMember, setOrderBuilder } = useGlobals();
   const history = useHistory();
   const itemsPrice = cartItems.reduce(
     (a: number, c: CartItem) => a + c.quantity * c.price,
@@ -51,10 +51,10 @@ export default function Basket(props: BasketProps) {
       await order.createOrder(cartItems);
 
       onDeleteAll();
-      //refresh via context
+      setOrderBuilder(new Date());
       history.push("/orders");
     } catch (err) {
-      console.log("Error, proccessOrderHandler", err);
+      console.log("Error, proceedOrderHandler", err);
       sweetErrorHandling(err).then();
     }
   };
@@ -78,7 +78,6 @@ export default function Basket(props: BasketProps) {
         id="account-menu"
         open={open}
         onClose={handleClose}
-        // onClick={handleClose}
         PaperProps={{
           elevation: 0,
           sx: {
@@ -180,3 +179,4 @@ export default function Basket(props: BasketProps) {
     </Box>
   );
 }
+

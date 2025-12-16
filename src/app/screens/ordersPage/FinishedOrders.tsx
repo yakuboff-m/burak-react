@@ -16,7 +16,7 @@ const finishedOrderRetriever = createSelector(
   (finishedOrders) => ({ finishedOrders })
 );
 
-export default function ProcessOrders() {
+export default function FinishedOrders() {
   const { finishedOrders } = useSelector(finishedOrderRetriever);
   return (
     <TabPanel value={"3"}>
