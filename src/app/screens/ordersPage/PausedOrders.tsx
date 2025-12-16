@@ -1,10 +1,10 @@
 import React from "react";
 import { Box, Stack } from "@mui/material";
 import Button from "@mui/material/Button";
+import { TabPanel } from "@mui/lab";
 import { createSelector } from "reselect";
 import { retrievePausedOrders } from "./selector";
 import { useSelector } from "react-redux";
-import { TabPanel } from "@mui/lab";
 import { Order, OrderItem } from "../../../lib/types/order";
 import { Product } from "../../../lib/types/product";
 import { serverApi } from "../../../lib/config";
@@ -14,6 +14,8 @@ const pausedOrdersRetriever = createSelector(
   retrievePausedOrders,
   (pausedOrders) => ({ pausedOrders })
 );
+
+/** HANDLERS **/
 
 export default function PausedOrders() {
   const { pausedOrders } = useSelector(pausedOrdersRetriever);

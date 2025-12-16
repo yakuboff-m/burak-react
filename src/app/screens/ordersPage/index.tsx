@@ -12,7 +12,7 @@ import "../../../css/order.css";
 import Divider from "../../components/divider";
 import { Product } from "../../../lib/types/product";
 import { Member } from "../../../lib/types/member";
-import { setPausedOrders, setProcessOrders, setFinishedOrders } from "./slice";
+import { setPausedOrders, setProccessOrders, setFinishedOrders } from "./slice";
 import { useDispatch } from "react-redux";
 import { Order, OrderInquiry } from "../../../lib/types/order";
 import { OrderStatus } from "../../../lib/enums/order.enum";
@@ -21,12 +21,12 @@ import OrderService from "../../services/OrderService";
 /** REDUX SLICE & SELECTOR **/
 const actionDispatch = (dispatch: Dispatch) => ({
   setPausedOrders: (data: Order[]) => dispatch(setPausedOrders(data)),
-  setProcessOrders: (data: Order[]) => dispatch(setProcessOrders(data)),
+  setProccessOrders: (data: Order[]) => dispatch(setProccessOrders(data)),
   setTFinishedOrders: (data: Order[]) => dispatch(setFinishedOrders(data)),
 });
 
 export default function OrdersPage() {
-  const { setPausedOrders, setProcessOrders, setTFinishedOrders } =
+  const { setPausedOrders, setProccessOrders, setTFinishedOrders } =
     actionDispatch(useDispatch());
   const [value, setValue] = useState("1");
   const [orderInquiry, setOrderInquiry] = useState<OrderInquiry>({
@@ -45,7 +45,7 @@ export default function OrdersPage() {
 
     order
       .getMyOrders({ ...orderInquiry, orderStatus: OrderStatus.PROCESS })
-      .then((data) => setProcessOrders(data))
+      .then((data) => setProccessOrders(data))
       .catch((err) => console.log(err));
 
     order

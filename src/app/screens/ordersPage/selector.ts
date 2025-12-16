@@ -7,7 +7,7 @@ export const retrievePausedOrders = createSelector(
   (OrdersPage) => OrdersPage.pausedOrders
 );
 
-export const retrieveProcessOrders = createSelector(
+export const retrieveProccessOrders = createSelector(
   selectOrdersPage,
   (OrdersPage) => OrdersPage.processOrders
 );
