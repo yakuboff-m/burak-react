@@ -16,6 +16,9 @@ import { OrderStatus } from "../../../lib/enums/order.enum";
 import OrderService from "../../services/OrderService";
 import { useGlobals } from "../../hooks/useGlobals";
 import "../../../css/order.css";
+import { useHistory } from "react-router-dom";
+import { serverApi } from "../../../lib/config";
+import { MemberType } from "../../../lib/enums/member.enum";
 
 /** REDUX SLICE & SELECTOR **/
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -25,9 +28,11 @@ const actionDispatch = (dispatch: Dispatch) => ({
 });
 
 export default function OrdersPage() {
+  const history = useHistory();
+  const { authMember } = useGlobals();
   const { setPausedOrders, setProccessOrders, setTFinishedOrders } =
     actionDispatch(useDispatch());
-    const {orderBuilder} = useGlobals();
+  const { orderBuilder } = useGlobals();
   const [value, setValue] = useState("1");
   const [orderInquiry, setOrderInquiry] = useState<OrderInquiry>({
     page: 1,
@@ -60,6 +65,7 @@ export default function OrdersPage() {
     setValue(newValue);
   };
 
+  if (!authMember) history.push("/");
   return (
     <div className={"order-page"}>
       <Container className="order-container">
@@ -84,8 +90,8 @@ export default function OrdersPage() {
             </Box>
 
             <Stack className={"order-main-content"}>
-              <PausedOrders setValue={setValue}/>
-              <ProcessOrders setValue={setValue}/>
+              <PausedOrders setValue={setValue} />
+              <ProcessOrders setValue={setValue} />
               <FinishedOrders />
             </Stack>
           </TabContext>
@@ -94,18 +100,34 @@ export default function OrdersPage() {
         <Stack className={"order-right"}>
           <Stack className="profile-box">
             <Stack className="profile-info">
-              <img src="/img/justin.webp" />
+              <img
+                src={
+                  authMember?.memberImage
+                    ? `${serverApi}/${authMember.memberImage}`
+                    : "/icons/default-user.svg"
+                }
+              />
               <span className="user-badge">
-                <img className="" src="/icons/user-badge.svg" alt="" />
+                <img
+                  className=""
+                  src={
+                    authMember?.memberType === MemberType.RESTAURANT
+                      ? "/icons/restaurant.svg"
+                      : "/icons/user-badge.svg"
+                  }
+                  alt=""
+                />
               </span>
-              <p>Justin</p>
-              <p>USER</p>
+              <p> {authMember?.memberNick}</p>
+              <p>{authMember?.memberType}</p>
             </Stack>
             <Stack className="address">
               <Divider width="100%" height="2" bg="#A1A1A1" />
               <Box className="address-box">
                 <img src="/icons/location.svg" alt="" />
-                <p>South Korea, Busan</p>
+                <p>{authMember?.memberAddress
+                    ? authMember.memberAddress
+                    : "Do not exist"}</p>
               </Box>
             </Stack>
           </Stack>
